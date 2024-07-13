@@ -14,44 +14,53 @@
             <a href="/checkout" class="btn btn-secondary btn-lg mr-3">Check Out</a>
             <a href="/log" class="btn btn-info btn-lg">Log</a>
         </div>
-        <h2 class="mt-5">Check In</h2>
-        <% if (errorMessage) { %>
-            <div class="alert alert-danger" role="alert">
-                <%= errorMessage %>
+
+        <div class="row mt-5">
+            <!-- Check In Form Column -->
+            <div class="col-md-6">
+                <h2>Check In</h2>
+                <% if (errorMessage) { %>
+                    <div class="alert alert-danger" role="alert">
+                        <%= errorMessage %>
+                    </div>
+                <% } %>
+                <form action="/checkin" method="post" class="mb-3">
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Check In</button>
+                </form>
             </div>
-        <% } %>
-        <form action="/checkin" method="post" class="mb-3">
-            <div class="form-group">
-                <label for="first_name">First Name</label>
-                <input type="text" class="form-control" id="first_name" name="first_name" required>
+            <!-- Last 10 Entries Column -->
+            <div class="col-md-6">
+                <h2>Last 10 Entries</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Action</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% records.forEach(record => { %>
+                        <tr>
+                            <td><%= record.first_name %></td>
+                            <td><%= record.last_name %></td>
+                            <td><%= record.action %></td>
+                            <td><%= record.timestamp.toISOString().replace('T', ' ').substring(0, 19) %></td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
             </div>
-            <div class="form-group">
-                <label for="last_name">Last Name</label>
-                <input type="text" class="form-control" id="last_name" name="last_name" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Check In</button>
-        </form>
-        <h2>Last 10 Entries</h2>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Action</th>
-                    <th>Timestamp</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% records.forEach(record => { %>
-                <tr>
-                    <td><%= record.first_name %></td>
-                    <td><%= record.last_name %></td>
-                    <td><%= record.action %></td>
-                    <td><%= record.timestamp.toISOString().replace('T', ' ').substring(0, 19) %></td>
-                </tr>
-                <% }); %>
-            </tbody>
-        </table>
+        </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
