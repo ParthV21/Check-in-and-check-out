@@ -5,18 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Out</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        .btn-group {
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .form-control-lg {
+            font-size: 1.25rem; /* Larger font size for input fields */
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        .btn-checkout {
+            background-color: #6c757d; /* Match button color with the log button */
+            color: #fff; /* White text color */
+        }
+        .btn-checkout:hover {
+            background-color: #5a6268; /* Darker shade on hover */
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" role="main">
         <h1 class="mt-5 text-center">Check-In/Check-Out System</h1>
-        <div class="d-flex justify-content-center mt-5">
+        <div class="btn-group mt-5">
             <a href="/checkin" class="btn btn-primary btn-lg mr-3">Check In</a>
             <a href="/checkout" class="btn btn-secondary btn-lg mr-3">Check Out</a>
             <a href="/log" class="btn btn-info btn-lg">Log</a>
         </div>
 
         <div class="row mt-5 justify-content-center">
-            <div class="col-md-4">
+            <div class="col-md-6">
                 <h2 class="text-center">Check Out</h2>
                 <% if (errorMessage) { %>
                     <div class="alert alert-danger" role="alert">
@@ -24,15 +47,16 @@
                     </div>
                 <% } %>
                 <form action="/checkout" method="post" class="mb-3">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="form-group">
                         <label for="user">Select User</label>
-                        <select class="form-control" id="user" name="user" required>
+                        <select class="form-control form-control-lg" id="user" name="user" required>
                             <% uniqueUsers.forEach(user => { %>
-                                <option value="<%= user %>"><%= user %></option>
+                                <option value="<%= user._id %>"><%= user.first_name %> <%= user.last_name %></option>
                             <% }); %>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-secondary btn-block">Check Out</button>
+                    <button type="submit" class="btn btn-checkout btn-block">Check Out</button>
                 </form>
             </div>
         </div>

@@ -5,18 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check In</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/styles.css">
+   <style>
+        .btn-group {
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .form-control-lg {
+            font-size: 1.25rem; /* Larger font size for input fields */
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
+    <div class="container" role="main">
         <h1 class="mt-5 text-center">Check-In/Check-Out System</h1>
-        <div class="d-flex justify-content-center mt-5">
+        <div class="btn-group mt-5">
             <a href="/checkin" class="btn btn-primary btn-lg mr-3">Check In</a>
             <a href="/checkout" class="btn btn-secondary btn-lg mr-3">Check Out</a>
             <a href="/log" class="btn btn-info btn-lg">Log</a>
         </div>
 
         <div class="row mt-5 justify-content-center">
-            <!-- Check In Form Column -->
             <div class="col-md-6">
                 <h2 class="text-center">Check In</h2>
                 <% if (errorMessage) { %>
@@ -25,19 +40,21 @@
                     </div>
                 <% } %>
                 <form action="/checkin" method="post" class="mb-3">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <div class="form-group">
                         <label for="first_name">First Name</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" required>
+                        <input type="text" class="form-control form-control-lg" id="first_name" name="first_name" required>
                     </div>
                     <div class="form-group">
                         <label for="last_name">Last Name</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" required>
+                        <input type="text" class="form-control form-control-lg" id="last_name" name="last_name" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Check In</button>
                 </form>
             </div>
         </div>
     </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
