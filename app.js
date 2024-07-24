@@ -10,7 +10,6 @@ const app = express();
 // MongoDB connection
 mongoose.connect('mongodb+srv://admin:admin@checkin.ketzwii.mongodb.net/?retryWrites=true&w=majority&appName=Checkin');
 
-
 const recordSchema = new mongoose.Schema({
   first_name: String,
   last_name: String,
@@ -21,16 +20,14 @@ const recordSchema = new mongoose.Schema({
 const Record = mongoose.model('Record', recordSchema);
 
 app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'public/views')); // Set the views directory to 'public/views'
-app.use(express.urlencoded({ extended: false })); // This replaces the body-parser middleware
+app.set('views', path.join(__dirname, 'public/views'));
+app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Ensure the public directory exists
 if (!fs.existsSync(path.join(__dirname, 'public'))) {
   fs.mkdirSync(path.join(__dirname, 'public'));
 }
 
-// Authentication middleware
 const auth = (req, res, next) => {
   const user = basicAuth(req);
   if (user && user.name === 'admin' && user.pass === 'admin') {
@@ -41,10 +38,12 @@ const auth = (req, res, next) => {
   }
 };
 
+// Landing page route
 app.get('/', (req, res) => {
-  res.redirect('/checkin');
+  res.render('landing'); // Renders landing.ejs
 });
 
+// Check-in page route
 app.get('/checkin', async (req, res) => {
   const records = await Record.find().sort({ _id: -1 }).limit(10).exec();
   res.render('checkin', { records, errorMessage: null });
@@ -53,7 +52,6 @@ app.get('/checkin', async (req, res) => {
 app.post('/checkin', async (req, res) => {
   const { first_name, last_name } = req.body;
 
-  // Check if the user is already checked in
   const existingCheckIn = await Record.findOne({
     first_name,
     last_name,
@@ -76,9 +74,10 @@ app.post('/checkin', async (req, res) => {
 
   const newRecord = new Record({ first_name, last_name, action: 'Check-In' });
   await newRecord.save();
-  res.redirect('/checkin');
+  res.redirect('/');
 });
 
+// Checkout page route
 app.get('/checkout', async (req, res) => {
   const records = await Record.find().sort({ _id: -1 }).limit(10).exec();
   
@@ -135,14 +134,16 @@ app.post('/checkout', async (req, res) => {
 
   const newRecord = new Record({ first_name, last_name, action: 'Check-Out' });
   await newRecord.save();
-  res.redirect('/checkout');
+  res.redirect('/');
 });
 
+// Log page route
 app.get('/log', async (req, res) => {
   const records = await Record.find().sort({ _id: -1 }).limit(20).exec();
   res.render('log', { records, limit: 20 });
 });
 
+// Log filter and download routes
 app.get('/log/filter', async (req, res) => {
   const { first_name, last_name, action, limit } = req.query;
   const query = {};

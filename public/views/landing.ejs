@@ -1,0 +1,81 @@
+<!-- public/views/landing.ejs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Check-In App</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .container {
+            text-align: center;
+            max-width: 600px;
+            margin: 20px;
+            padding: 20px;
+            background-color: linear-gradient(to right, #ff0000, #ffa500, #ffff00, #008000, #0000ff, #4b0082, #ee82ee);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #333333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #666666;
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        li a {
+            display: block;
+            padding: 10px 20px;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        li a:nth-child(1) { background-color: #ff0000; } /* Red */
+        li a:nth-child(2) { background-color: #ffa500; } /* Orange */
+        li a:nth-child(3) { background-color: #ffff00; } /* Yellow */
+        li a:nth-child(4) { background-color: #008000; } /* Green */
+        li a:nth-child(5) { background-color: #0000ff; } /* Blue */
+        li a:nth-child(6) { background-color: #4b0082; } /* Indigo */
+        li a:nth-child(7) { background-color: #ee82ee; } /* Violet */
+
+        li a:hover {
+            background-color: transparent;
+            color: #45a049;
+            border: 2px solid #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Check-In App</h1>
+        <p>Track check-ins and check-outs effortlessly!</p>
+        <ul>
+            <li><a href="/checkin">Check-In</a></li>
+            <li><a href="/checkout">Check-Out</a></li>
+            <li><a href="/log">View Log</a></li>
+        </ul>
+    </div>
+</body>
+</html>

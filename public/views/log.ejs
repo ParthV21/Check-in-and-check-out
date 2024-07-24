@@ -1,78 +1,155 @@
 <!DOCTYPE html>
+
 <html lang="en">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Log</title>
+
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
 </head>
+
 <body>
+
     <div class="container">
+
         <h1 class="mt-5">Check-In/Check-Out System</h1>
+
         <div class="d-flex justify-content-center mt-5">
+
             <a href="/checkin" class="btn btn-primary btn-lg mr-3">Check In</a>
+
             <a href="/checkout" class="btn btn-secondary btn-lg mr-3">Check Out</a>
+
             <a href="/log" class="btn btn-info btn-lg">Log</a>
+
         </div>
+
         <h2 class="mt-5">Log</h2>
+
         <form action="/log/filter" method="get" class="mb-3">
+
             <div class="form-row">
+
                 <div class="form-group col-md-3">
+
                     <label for="first_name">First Name</label>
+
                     <input type="text" class="form-control" id="first_name" name="first_name">
+
                 </div>
+
                 <div class="form-group col-md-3">
+
                     <label for="last_name">Last Name</label>
+
                     <input type="text" class="form-control" id="last_name" name="last_name">
+
                 </div>
+
                 <div class="form-group col-md-3">
+
                     <label for="action">Action</label>
+
                     <select class="form-control" id="action" name="action">
+
                         <option value="">All</option>
+
                         <option value="Check-In">Check-In</option>
+
                         <option value="Check-Out">Check-Out</option>
+
                     </select>
+
                 </div>
+
                 <div class="form-group col-md-3">
+
                     <label for="limit">Entries</label>
+
                     <select class="form-control" id="limit" name="limit">
+
                         <option value="10">10</option>
+
                         <option value="20">20</option>
+
                         <option value="30">30</option>
+
                         <option value="40">40</option>
+
                         <option value="50">50</option>
+
                     </select>
+
                 </div>
+
             </div>
+
             <button type="submit" class="btn btn-info">Filter</button>
+
         </form>
+
         <h2>Last <%= limit %> Entries</h2>
+
         <div style="max-height: 400px; overflow-y: auto;">
+
             <table class="table table-striped">
+
                 <thead>
+
                     <tr>
+
                         <th>First Name</th>
+
                         <th>Last Name</th>
+
                         <th>Action</th>
+
                         <th>Timestamp</th>
+
                     </tr>
+
                 </thead>
+
                 <tbody>
+
                     <% records.forEach(record => { %>
+
                     <tr>
+
                         <td><%= record.first_name %></td>
+
                         <td><%= record.last_name %></td>
+
                         <td><%= record.action %></td>
+
                         <td><%= record.timestamp.toISOString().replace('T', ' ').substring(0, 19) %></td>
+
                     </tr>
+
                     <% }); %>
+
                 </tbody>
+
             </table>
+
         </div>
+
         <a href="/log/download" class="btn btn-warning mt-3">Download CSV</a>
+
     </div>
+
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 </body>
+
 </html>
